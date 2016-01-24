@@ -5,6 +5,6 @@ namespace WhiteRabbit
 {
     public interface IConsumer
     {
-        IObservable<BasicDeliverEventArgs> Stream { get; }
+        IObservable<BasicDeliverEventArgs> Start(string queue, bool noAck);
     }
 }

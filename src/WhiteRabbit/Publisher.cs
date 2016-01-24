@@ -7,15 +7,13 @@ namespace WhiteRabbit
 {
     public sealed class Publisher<T> : IPublisher<T>
     {
-        private readonly IConnection _connection;
         private readonly IModel _channel;
         private readonly ISerializer _serializer;
         private readonly ExchangeConfig _exchange;
 
-        public Publisher(IConnectionFactory connectionFactory, ISerializer serializer, ExchangeConfig exchange)
+        public Publisher(IModelFactory modelFactory, ISerializer serializer, ExchangeConfig exchange)
         {
-            _connection = connectionFactory.CreateConnection();
-            _channel = _connection.CreateModel();
+            _channel = modelFactory.CreateModel();
             _serializer = serializer;
             _exchange = exchange;
 
@@ -28,7 +26,7 @@ namespace WhiteRabbit
             {
                 var body = _serializer.Serialize(msg);
 
-                var properties = new BasicProperties()
+                var properties = new BasicProperties
                 {
                     MessageId = Guid.NewGuid().ToString(),
                     CorrelationId = correlationId.ToString(),
@@ -41,7 +39,6 @@ namespace WhiteRabbit
         public void Dispose()
         {
             _channel.Dispose();
-            _connection.Dispose();
         }
     }
 }

@@ -3,55 +3,39 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace WhiteRabbit
 {
     public sealed class Consumer : IConsumer
     {
-        private readonly IConnectionFactory _connectionFactory;
-        private readonly string _queue;
+        private readonly IModelFactory _modelFactory;
         private readonly Action _onDispose;
-        private readonly ManualResetEvent _started;
 
-        private IConnection _connection;
         private IModel _channel;
 
-        public Consumer(IConnectionFactory connectionFactory, string queue, bool noAck, Action onDispose)
+        public Consumer(IModelFactory modelFactory, Action onDispose)
         {
-            _connectionFactory = connectionFactory;
-            _queue = queue;
+            _modelFactory = modelFactory;
             _onDispose = onDispose;
-
-            _started = new ManualResetEvent(false);
-
-            Start(noAck);
-
-            _started.WaitOne();
         }
 
-        public IObservable<BasicDeliverEventArgs> Stream { get; private set; }
-
-        private Task Start(bool noAck)
+        public IObservable<BasicDeliverEventArgs> Start(string queue, bool noAck)
         {
-            return Task.Run(() =>
+            _channel = _modelFactory.CreateModel();
+
+            return Observable.Create<BasicDeliverEventArgs>(o =>
             {
-                _connection = _connectionFactory.CreateConnection();
-                _channel = _connection.CreateModel();
+                var consumer = new EventingBasicConsumer(_channel);
 
-                Stream = Observable.Create<BasicDeliverEventArgs>(o =>
+                consumer.Received += (obj, evtArgs) => { o.OnNext(evtArgs); };
+
+                _channel.BasicConsume(queue, noAck, consumer);
+
+                return Disposable.Create(() =>
                 {
-                    var consumer = new EventingBasicConsumer(_channel);
-
-                    consumer.Received += (obj, evtArgs) => { o.OnNext(evtArgs); };
-
-                    _channel.BasicConsume(_queue, noAck, consumer);
-
-                    return Disposable.Create(_onDispose);
+                    _channel.Dispose();
+                    _onDispose();
                 });
-
-                _started.Set();
             });
         }
     }
