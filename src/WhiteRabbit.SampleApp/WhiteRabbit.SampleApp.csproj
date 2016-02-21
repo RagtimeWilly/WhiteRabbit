@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8527ADC9-42C6-4530-A7CF-D7FCF371CEEB}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{2A3CEE14-84C5-44CF-8A5E-6AE628BC3F43}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WhiteRabbit.Autofac</RootNamespace>
-    <AssemblyName>WhiteRabbit.Autofac</AssemblyName>
+    <RootNamespace>WhiteRabbit.SampleApp</RootNamespace>
+    <AssemblyName>WhiteRabbit.SampleApp</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -35,12 +37,15 @@
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.6.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.3.6.0\lib\net45\RabbitMQ.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,16 +55,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ScopedMessageHandler.cs" />
-    <Compile Include="MessageContextProvider.cs" />
+    <Compile Include="Application\AddMessageHandler.cs" />
+    <Compile Include="Application\UpdateMessageHandler.cs" />
+    <Compile Include="Contracts\AddMessage.cs" />
+    <Compile Include="Contracts\MessageAdded.cs" />
+    <Compile Include="Contracts\MessageUpdated.cs" />
+    <Compile Include="Contracts\UpdateMessage.cs" />
+    <Compile Include="Infrastructure\IoC\ApplicationIoCModule.cs" />
+    <Compile Include="Infrastructure\IoC\InfrastructureIoCModule.cs" />
+    <Compile Include="Infrastructure\IoC\IoCBootstrapper.cs" />
+    <Compile Include="Infrastructure\IoC\LoggingIoCModule.cs" />
+    <Compile Include="Infrastructure\Messaging\CommandDispatcher.cs" />
+    <Compile Include="Infrastructure\Messaging\EventPublisher.cs" />
+    <Compile Include="Interfaces\ICommandHandler.cs" />
+    <Compile Include="Interfaces\IMessageAddedPublisher.cs" />
+    <Compile Include="Interfaces\IMessageUpdatedPublisher.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScopedMessageHandlerIoCModule.cs" />
-    <Compile Include="WhiteRabbitIoCModule.cs" />
+    <Compile Include="Services\SampleService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\WhiteRabbit.Autofac\WhiteRabbit.Autofac.csproj">
+      <Project>{8527adc9-42c6-4530-a7cf-d7fcf371ceeb}</Project>
+      <Name>WhiteRabbit.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WhiteRabbit.Json\WhiteRabbit.Json.csproj">
+      <Project>{90e2d368-a159-4818-b052-60d089e683ab}</Project>
+      <Name>WhiteRabbit.Json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WhiteRabbit\WhiteRabbit.csproj">
       <Project>{17eac1e5-b1f2-4b49-b357-1b1ffaf23e58}</Project>
       <Name>WhiteRabbit</Name>

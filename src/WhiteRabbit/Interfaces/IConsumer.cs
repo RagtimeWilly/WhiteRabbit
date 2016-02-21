@@ -1,10 +1,10 @@
-﻿using RabbitMQ.Client.Events;
-using System;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace WhiteRabbit
 {
-    public interface IConsumer
+    public interface IConsumer : IDisposable
     {
-        IObservable<BasicDeliverEventArgs> Start(string queue, bool noAck);
+        Task Start(bool noAck);
     }
 }

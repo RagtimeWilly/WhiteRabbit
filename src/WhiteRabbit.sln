@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteRabbit", "WhiteRabbit\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteRabbit.Autofac", "WhiteRabbit.Autofac\WhiteRabbit.Autofac.csproj", "{8527ADC9-42C6-4530-A7CF-D7FCF371CEEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteRabbit.Json", "WhiteRabbit.Json\WhiteRabbit.Json.csproj", "{90E2D368-A159-4818-B052-60D089E683AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteRabbit.SampleApp", "WhiteRabbit.SampleApp\WhiteRabbit.SampleApp.csproj", "{2A3CEE14-84C5-44CF-8A5E-6AE628BC3F43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{8527ADC9-42C6-4530-A7CF-D7FCF371CEEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8527ADC9-42C6-4530-A7CF-D7FCF371CEEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8527ADC9-42C6-4530-A7CF-D7FCF371CEEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90E2D368-A159-4818-B052-60D089E683AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90E2D368-A159-4818-B052-60D089E683AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90E2D368-A159-4818-B052-60D089E683AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90E2D368-A159-4818-B052-60D089E683AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A3CEE14-84C5-44CF-8A5E-6AE628BC3F43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A3CEE14-84C5-44CF-8A5E-6AE628BC3F43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A3CEE14-84C5-44CF-8A5E-6AE628BC3F43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A3CEE14-84C5-44CF-8A5E-6AE628BC3F43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

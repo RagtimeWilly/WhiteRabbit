@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace WhiteRabbit
 {
     public interface ISerializer
@@ -6,5 +7,7 @@ namespace WhiteRabbit
         byte[] Serialize<T>(T obj);
 
         T Deserialize<T>(byte[] bytes);
+
+        object DeserializeObject(byte[] bytes, Type type);
     }
 }

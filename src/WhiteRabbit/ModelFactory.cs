@@ -4,15 +4,29 @@ namespace WhiteRabbit
 {
     public class ModelFactory : IModelFactory
     {
-        private readonly IConnection _connection;
+        private readonly IConnectionFactory _connectionFactory;
+        private readonly object _syncLock = new object();
 
-        public ModelFactory(IConnection connection)
+        private IConnection _connection;
+
+        public ModelFactory(IConnectionFactory connectionFactory)
         {
-            _connection = connection;
+            _connectionFactory = connectionFactory;
         }
 
         public IModel CreateModel()
         {
+            if (_connection == null || !_connection.IsOpen)
+            {
+                lock (_syncLock)
+                {
+                    if (_connection == null || !_connection.IsOpen)
+                    {
+                        _connection = _connectionFactory.CreateConnection();
+                    }
+                }   
+            }
+
             return _connection.CreateModel();
         }
     }

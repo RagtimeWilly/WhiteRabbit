@@ -28,5 +28,12 @@ namespace WhiteRabbit
         public bool AutoDelete { get; set; }
 
         public IDictionary<string, object> Arguments { get; set; }
+
+        public bool IsDefaultExchange => string.IsNullOrEmpty(Name);
+
+        public static ExchangeConfig Default()
+        {
+            return new ExchangeConfig(string.Empty, "direct");
+        }
     }
 }

@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace WhiteRabbit
 {
-    public interface IPublisher<T> : IDisposable
+    public interface IPublisher
     {
-        Task Publish(T msg, string routingKey, Guid correlationId);
+        Task Publish<T>(T msg, string routingKey, Guid correlationId);
     }
 }
