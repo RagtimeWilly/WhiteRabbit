@@ -13,8 +13,8 @@
         <copyright>Copyright © Sean Comiskey 2016</copyright>
 		<tags>rabbitmq white rabbit json</tags>
         <dependencies>
-			<package id="WhiteRabbit" version="$version$" />
-			<package id="Newtonsoft.Json" version="9.0.1"  />
+			<dependency id="WhiteRabbit" version="$version$" />
+			<dependency id="Newtonsoft.Json" version="9.0.1"  />
         </dependencies>
     </metadata>
     <files>

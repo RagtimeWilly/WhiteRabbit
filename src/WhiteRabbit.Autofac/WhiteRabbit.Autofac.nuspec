@@ -13,8 +13,8 @@
         <copyright>Copyright © Sean Comiskey 2016</copyright>
 		<tags>rabbitmq white rabbit autofac</tags>
         <dependencies>
-			<package id="WhiteRabbit" version="$version$" />
-			<package id="Autofac" version="4.2.1" />
+			<dependency id="WhiteRabbit" version="$version$" />
+			<dependency id="Autofac" version="4.2.1" />
         </dependencies>
     </metadata>
     <files>
