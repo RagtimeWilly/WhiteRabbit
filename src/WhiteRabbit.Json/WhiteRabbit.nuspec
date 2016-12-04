@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>WhiteRabbit.Json</id>
+        <version>$version$</version>
+        <title>WhiteRabbit.Json</title>
+        <authors>Sean Comiskey</authors>
+        <owners>Sean Comiskey</owners>
+		<licenseUrl>https://github.com/RagtimeWilly/WhiteRabbit/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/RagtimeWilly/WhiteRabbit/</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Json serializer to be used with the White Rabbit library</description>
+        <copyright>Copyright © Sean Comiskey 2016</copyright>
+		<tags>rabbitmq white rabbit json</tags>
+        <dependencies>
+			<package id="WhiteRabbit" version="$version$" />
+			<package id="Newtonsoft.Json" version="9.0.1"  />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\WhiteRabbit.Json.dll" target="lib\net46\WhiteRabbit.Json.dll" />
+    </files>
+</package>

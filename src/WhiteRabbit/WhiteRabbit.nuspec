@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>WhiteRabbit</id>
+        <version>$version$</version>
+        <title>WhiteRabbit</title>
+        <authors>Sean Comiskey</authors>
+        <owners>Sean Comiskey</owners>
+		<licenseUrl>https://github.com/RagtimeWilly/WhiteRabbit/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/RagtimeWilly/WhiteRabbit/</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Thin wrapper of RabbitMQ.Client for .NET</description>
+        <copyright>Copyright © Sean Comiskey 2016</copyright>
+		<tags>rabbitmq white rabbit</tags>
+        <dependencies>
+			<dependency id="RabbitMQ.Client" version="4.1.1" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\WhiteRabbit.dll" target="lib\net46\WhiteRabbit.dll" />
+    </files>
+</package>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>WhiteRabbit.Autofac</id>
+        <version>$version$</version>
+        <title>WhiteRabbit.Autofac</title>
+        <authors>Sean Comiskey</authors>
+        <owners>Sean Comiskey</owners>
+		<licenseUrl>https://github.com/RagtimeWilly/WhiteRabbit/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/RagtimeWilly/WhiteRabbit/</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Provides Autofac registration for the White Rabbit library.</description>
+        <copyright>Copyright © Sean Comiskey 2016</copyright>
+		<tags>rabbitmq white rabbit autofac</tags>
+        <dependencies>
+			<package id="WhiteRabbit" version="$version$" />
+			<package id="Autofac" version="4.2.1" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\WhiteRabbit.Autofac.dll" target="lib\net46\WhiteRabbit.Autofac.dll" />
+    </files>
+</package>
