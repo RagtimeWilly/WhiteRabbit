@@ -8,8 +8,7 @@ namespace WhiteRabbit
     {
         private readonly IMessageHandler _handler;
 
-        public BasicConsumer(IMessageHandler handler, 
-            IModelFactory modelFactory, string queueName, Action<Exception, string> onError)
+        public BasicConsumer(IMessageHandler handler, IModelFactory modelFactory, string queueName, Action<Exception, string> onError)
             : base(modelFactory, queueName, onError)
         {
             _handler = handler;

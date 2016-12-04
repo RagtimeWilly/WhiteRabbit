@@ -23,11 +23,12 @@ namespace WhiteRabbit
 
         protected void Register(T handler)
         {
-            var cmdTypes = handler.GetType()
-                                  .GetInterfaces()
-                                  .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == GenericHandler)
-                                  .Select(i => i.GetGenericArguments()[0])
-                                  .ToList();
+            var cmdTypes = handler
+                .GetType()
+                .GetInterfaces()
+                .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == GenericHandler)
+                .Select(i => i.GetGenericArguments()[0])
+                .ToList();
 
             if (Handlers.Keys.Any(cmdTypes.Contains))
                 throw new ArgumentException("Only one handler per type is allowed");

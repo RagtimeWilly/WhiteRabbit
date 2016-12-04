@@ -20,19 +20,18 @@ namespace WhiteRabbit
 
         public void Init()
         {
-            var channel = _modelFactory.CreateModel();
-
-            foreach (var e in _exchanges)
+            using (var channel = _modelFactory.CreateModel())
             {
-                channel.DeclareExchange(e);
-            }
+                foreach (var e in _exchanges)
+                {
+                    channel.DeclareExchange(e);
+                }
 
-            foreach (var q in _queueConfigs)
-            {
-                channel.DeclareAndBindQueue(q);
+                foreach (var q in _queueConfigs)
+                {
+                    channel.DeclareAndBindQueue(q);
+                }
             }
-
-            channel.Dispose();
         }
     }
 }

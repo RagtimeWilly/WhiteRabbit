@@ -1,5 +1,4 @@
-﻿using RabbitMQ.Client;
-using RabbitMQ.Client.Framing;
+﻿using RabbitMQ.Client.Framing;
 using System;
 using System.Threading.Tasks;
 
@@ -33,7 +32,7 @@ namespace WhiteRabbit
                         Type = msg.GetType().AssemblyQualifiedName
                     };
 
-                    channel.BasicPublish(_exchange, routingKey, properties, body);
+                    channel.BasicPublish(_exchange, routingKey, false, properties, body);
                 }
             });
         }

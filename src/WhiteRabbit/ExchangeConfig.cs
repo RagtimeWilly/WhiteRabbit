@@ -31,9 +31,6 @@ namespace WhiteRabbit
 
         public bool IsDefaultExchange => string.IsNullOrEmpty(Name);
 
-        public static ExchangeConfig Default()
-        {
-            return new ExchangeConfig(string.Empty, "direct");
-        }
+        public static ExchangeConfig Default => new ExchangeConfig(string.Empty, "direct");
     }
 }

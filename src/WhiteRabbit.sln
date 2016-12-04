@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteRabbit.Tests", "WhiteRabbit.Tests\WhiteRabbit.Tests.csproj", "{199BF94C-4E0E-4D27-A59C-325A0184C7C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteRabbit.Tests.Integration", "WhiteRabbit.Tests\WhiteRabbit.Tests.Integration.csproj", "{199BF94C-4E0E-4D27-A59C-325A0184C7C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteRabbit", "WhiteRabbit\WhiteRabbit.csproj", "{17EAC1E5-B1F2-4B49-B357-1B1FFAF23E58}"
 EndProject

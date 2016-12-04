@@ -10,7 +10,7 @@ namespace WhiteRabbit
         }
 
         public QueueConfig(string name, string routingKey)
-            : this(name, routingKey, ExchangeConfig.Default())
+            : this(name, routingKey, ExchangeConfig.Default)
         {
         }
 
