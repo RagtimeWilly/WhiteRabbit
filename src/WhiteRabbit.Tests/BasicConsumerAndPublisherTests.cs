@@ -9,7 +9,7 @@ using Rhino.Mocks;
 
 namespace WhiteRabbit.Tests.Integration
 {
-    [TestFixture]
+    [TestFixture, Explicit]
     public class BasicConsumerAndPublisherTests
     {
         private TestContext _context;
