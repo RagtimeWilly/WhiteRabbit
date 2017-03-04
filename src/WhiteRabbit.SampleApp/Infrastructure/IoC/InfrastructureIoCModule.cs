@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Autofac.Core;
-using WhiteRabbit.Json;
+using WhiteRabbit.Autofac;
 using WhiteRabbit.SampleApp.Infrastructure.Messaging;
 
 namespace WhiteRabbit.SampleApp.Infrastructure.IoC
@@ -13,36 +13,13 @@ namespace WhiteRabbit.SampleApp.Infrastructure.IoC
         protected override void Load(ContainerBuilder builder)
         {
             RegisterTopologyConfiguration(builder);
-
-            builder
-                .RegisterType<JsonSerializer>()
-                .As<ISerializer>();
+            RegisterSerializer(builder);
+            RegisterPublishers(builder);
+            RegisterConsumers(builder);
 
             builder
                 .RegisterType<CommandDispatcher>()
                 .As<IDispatcher>();
-
-            builder
-                .RegisterType<Publisher>()
-                .WithParameter("exchange", string.Empty)
-                .Named<IPublisher>("commandsPublisher")
-                .SingleInstance();
-
-            builder
-                .RegisterType<Publisher>()
-                .WithParameter("exchange", EventsExchangeName)
-                .Named<IPublisher>("eventsPublisher")
-                .InstancePerLifetimeScope();
-
-            builder
-                .RegisterType<EventPublisher>()
-                .WithParameter(ResolvedParameter.ForNamed<IPublisher>("eventsPublisher"))
-                .AsImplementedInterfaces();
-
-            builder
-                .RegisterType<BasicConsumer>()
-                .WithParameter("queueName", CommandsQueueName)
-                .As<IConsumer>();
         }
 
         private static void RegisterTopologyConfiguration(ContainerBuilder builder)
@@ -58,8 +35,46 @@ namespace WhiteRabbit.SampleApp.Infrastructure.IoC
                 .As<QueueConfig>();
 
             builder
-                .Register(c => new QueueConfig("WhiteRabbit.SampleApp.Events.Testing", string.Empty, evtsExchange))
+                .Register(c => new QueueConfig("WhiteRabbit.SampleApp.Events.Testing", new RoutingConfig(string.Empty), evtsExchange))
                 .As<QueueConfig>();
+        }
+
+        private static void RegisterPublishers(ContainerBuilder builder)
+        {
+            builder
+                .RegisterType<WhiteRabbitPublisher>()
+                .WithParameter("exchangeName", string.Empty)
+                .Named<IPublisher>("commandsPublisher")
+                .SingleInstance();
+
+            builder
+                .RegisterType<WhiteRabbitPublisher>()
+                .WithParameter("exchangeName", EventsExchangeName)
+                .Named<IPublisher>("eventsPublisher")
+                .InstancePerLifetimeScope();
+
+            builder
+                .RegisterType<EventPublisher>()
+                .WithParameter(ResolvedParameter.ForNamed<IPublisher>("eventsPublisher"))
+                .AsImplementedInterfaces();
+        }
+
+        private static void RegisterConsumers(ContainerBuilder builder)
+        {
+            builder
+                .RegisterType<WhiteRabbitConsumer>()
+                .WithParameter("queueName", CommandsQueueName)
+                .As<IConsumer>();
+        }
+
+        private static void RegisterSerializer(ContainerBuilder builder)
+        {
+            builder
+                .RegisterSerializersFrom(new [] { "WhiteRabbit.Json" });
+
+            builder
+                .Register(c => new ContentType("application/json"))
+                .AsSelf();
         }
     }
 }

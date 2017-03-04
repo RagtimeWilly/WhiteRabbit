@@ -40,8 +40,7 @@ namespace WhiteRabbit.Tests.Integration
             private IMessageHandler _handler;
             private Guid _correlationId;
             private string _queueName;
-            private BasicConsumer _sut;
-
+            private WhiteRabbitConsumer _sut;
 
             public TestContext()
             {
@@ -62,14 +61,14 @@ namespace WhiteRabbit.Tests.Integration
                     .Repeat
                     .Once();
 
-                var queue = new QueueConfig(_queueName, string.Empty, ExchangeConfig.Default, false, true, true, null, null);
+                var queue = new QueueConfig(_queueName, new RoutingConfig(string.Empty), ExchangeConfig.Default, false, true, true, null);
 
                 using (var channel = _modelFactory.CreateModel())
                 {
                     channel.DeclareAndBindQueue(queue);
                 }
 
-                _sut = new BasicConsumer(_handler, _modelFactory, _queueName, (_, __) => { });
+                _sut = new WhiteRabbitConsumer(_handler, _modelFactory, _queueName, (_, __) => { });
 
                 Task.Run(() => _sut.Start(true));
 
@@ -85,9 +84,18 @@ namespace WhiteRabbit.Tests.Integration
                     .IgnoreArguments()
                     .Return(_fixture.Create<byte[]>());
 
-                var publisher = new Publisher(_modelFactory, serializer, ExchangeConfig.Default.Name);
+                var serializerFactory = _fixture.Freeze<ISerializerFactory>();
 
-                publisher.Publish(Guid.NewGuid(), _queueName, _correlationId).Wait();
+                serializerFactory
+                    .Stub(s => s.For(Arg<string>.Is.Anything))
+                    .IgnoreArguments()
+                    .Return(serializer);
+
+                var publisher = new WhiteRabbitPublisher(_modelFactory, serializerFactory, ExchangeConfig.Default.Name);
+
+                publisher
+                    .Publish(Guid.NewGuid(), _queueName, _correlationId, _fixture.Create<string>())
+                    .Wait();
 
                 Task.Delay(TimeSpan.FromSeconds(2)).Wait();
             }

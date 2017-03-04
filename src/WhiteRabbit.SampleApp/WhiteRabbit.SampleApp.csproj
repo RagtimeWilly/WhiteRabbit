@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.2.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.2.1\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=4.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.4.0\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Application\AddMessageHandler.cs" />
     <Compile Include="Application\UpdateMessageHandler.cs" />
+    <Compile Include="ContentType.cs" />
     <Compile Include="Contracts\AddMessage.cs" />
     <Compile Include="Contracts\MessageAdded.cs" />
     <Compile Include="Contracts\MessageUpdated.cs" />

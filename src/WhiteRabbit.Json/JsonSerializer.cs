@@ -6,6 +6,8 @@ namespace WhiteRabbit.Json
 {
     public class JsonSerializer : ISerializer
     {
+        public string ContentType => "application/json";
+
         public byte[] Serialize<T>(T obj)
         {
             var json = JsonConvert.SerializeObject(obj);

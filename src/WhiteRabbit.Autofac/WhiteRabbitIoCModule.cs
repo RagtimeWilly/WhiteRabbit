@@ -9,6 +9,8 @@ namespace WhiteRabbit.Autofac
     {
         public bool EnableContextPerMessage { get; set; }
 
+        public bool RegisterDefaultSerializerFactory { get; set; } = true;
+         
         protected override void Load(ContainerBuilder builder)
         {
             RegisterModelFactory(builder);
@@ -16,6 +18,13 @@ namespace WhiteRabbit.Autofac
             if (EnableContextPerMessage)
             {
                 builder.RegisterModule<ScopedMessageHandlerIoCModule>();
+            }
+
+            if (RegisterDefaultSerializerFactory)
+            {
+                builder
+                    .RegisterType<SerializerFactory>()
+                    .As<ISerializerFactory>();
             }
 
             builder
@@ -42,7 +51,12 @@ namespace WhiteRabbit.Autofac
             }
 
             builder
-                .Register(c => new ModelFactory(connectionFactory))
+                .Register(c => connectionFactory)
+                .As<IConnectionFactory>()
+                .SingleInstance();
+
+            builder
+                .RegisterType<ModelFactory>()
                 .As<IModelFactory>()
                 .SingleInstance();
         }

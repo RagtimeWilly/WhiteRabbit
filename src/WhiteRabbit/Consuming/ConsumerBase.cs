@@ -9,7 +9,6 @@ namespace WhiteRabbit
     public abstract class ConsumerBase
     {
         private readonly IModelFactory _modelFactory;
-        private readonly string _queueName;
         private readonly Action<Exception, string> _onError;
 
         private IModel _channel;
@@ -19,10 +18,13 @@ namespace WhiteRabbit
         protected ConsumerBase(IModelFactory modelFactory, string queueName, Action<Exception, string> onError)
         {
             _modelFactory = modelFactory;
-            _queueName = queueName;
+            QueueName = queueName;
             _onError = onError;
+
             _isRunning = true;
         }
+
+        protected string QueueName { get; }
 
         protected async Task Start(bool noAck, Action<object, BasicDeliverEventArgs> onReceived)
         {
@@ -30,10 +32,10 @@ namespace WhiteRabbit
             {
                 while (_isRunning)
                 {
+                    _stopConsumerEvent = new ManualResetEventSlim(false);
+
                     try
                     {
-                        _stopConsumerEvent = new ManualResetEventSlim(false);
-
                         _channel = _modelFactory.CreateModel();
 
                         var consumer = new EventingBasicConsumer(_channel);
@@ -46,36 +48,51 @@ namespace WhiteRabbit
                             }
                             catch (Exception ex)
                             {
-                                _onError(ex, $"Error processing message from {_queueName}");
+                                _onError(ex, $"Error processing message from {QueueName}");
                             }
                         };
 
                         consumer.Shutdown += (obj, evtArgs) =>
                         {
-                            _onError(new Exception(evtArgs.ReplyText), $"{_queueName}: Consumer shutdown: {evtArgs.ReplyText}");
+                            _onError(new Exception(evtArgs.ReplyText), $"{QueueName}: Consumer shutdown: {evtArgs.ReplyText}");
                             _stopConsumerEvent.Set();
                         };
 
-                        _channel.BasicConsume(_queueName, noAck, consumer);
+                        consumer.ConsumerCancelled += (obj, evtArgs) =>
+                        {
+                            _onError(new Exception("Consumer cancelled"), $"{QueueName}: Consumer cancelled: {evtArgs.ConsumerTag}");
+                            _stopConsumerEvent.Set();
+                        };
+
+                        _channel.BasicConsume(QueueName, noAck, consumer);
 
                         _stopConsumerEvent.Wait();
                     }
                     catch (Exception ex)
                     {
-                        _onError(ex, $"Error while trying to consume from {_queueName}: {ex.Message}");
+                        _onError(ex, $"Error while trying to consume from {QueueName}: {ex.Message}");
                     }
 
-                    Task.Delay(1000).Wait();
+                    Task.Delay(250).Wait();
                 }
-
-                _channel.Dispose();
             });
+        }
+
+        protected void AckMessage(ulong deliveryTag, bool multiple)
+        {
+            _channel.BasicAck(deliveryTag, multiple);
+        }
+
+        protected void NackMessage(ulong deliveryTag, bool multiple, bool requeue)
+        {
+            _channel.BasicNack(deliveryTag, multiple, requeue);
         }
 
         public void Dispose()
         {
             _isRunning = false;
             _stopConsumerEvent.Set();
+            _channel?.Dispose();
         }
     }
 }

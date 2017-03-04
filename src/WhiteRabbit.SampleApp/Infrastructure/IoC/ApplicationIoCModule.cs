@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using WhiteRabbit.SampleApp.Application;
+using WhiteRabbit.Autofac;
 using WhiteRabbit.SampleApp.Interfaces;
 
 namespace WhiteRabbit.SampleApp.Infrastructure.IoC
@@ -9,12 +9,7 @@ namespace WhiteRabbit.SampleApp.Infrastructure.IoC
         protected override void Load(ContainerBuilder builder)
         {
             builder
-                .RegisterType<AddMessageHandler>()
-                .As<ICommandHandler>();
-
-            builder
-                .RegisterType<UpdateMessageHandler>()
-                .As<ICommandHandler>();
+                .RegisterHandlersFrom<ICommandHandler>(new [] { "WhiteRabbit.SampleApp" });
         }
     }
 }

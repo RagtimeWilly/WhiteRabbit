@@ -45,25 +45,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consuming\DelayedVerificationConsumer.cs" />
     <Compile Include="Consuming\DispatcherBase.cs" />
     <Compile Include="Consuming\DispatchingMessageHandler.cs" />
-    <Compile Include="Consuming\BasicConsumer.cs" />
+    <Compile Include="Consuming\VerificationConsumer.cs" />
+    <Compile Include="Consuming\WhiteRabbitConsumer.cs" />
     <Compile Include="Interfaces\IMessageContext.cs" />
     <Compile Include="Interfaces\IMessageHandler.cs" />
     <Compile Include="Interfaces\IDispatcher.cs" />
+    <Compile Include="Interfaces\ISerializerFactory.cs" />
     <Compile Include="MessageContext.cs" />
     <Compile Include="ModelFactory.cs" />
     <Compile Include="Consuming\ConsumerBase.cs" />
-    <Compile Include="ExchangeConfig.cs" />
+    <Compile Include="Config\ExchangeConfig.cs" />
     <Compile Include="Interfaces\IModelFactory.cs" />
     <Compile Include="Interfaces\IConsumer.cs" />
     <Compile Include="Interfaces\IPublisher.cs" />
-    <Compile Include="TopologyBootstrapper.cs" />
-    <Compile Include="QueueConfig.cs" />
+    <Compile Include="Config\RoutingConfig.cs" />
+    <Compile Include="Config\TopologyBootstrapper.cs" />
+    <Compile Include="Config\QueueConfig.cs" />
+    <Compile Include="Publishing\PublisherBase.cs" />
+    <Compile Include="SerializerFactory.cs" />
     <Compile Include="Utils\IModelEx.cs" />
     <Compile Include="Interfaces\ISerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Publishing\Publisher.cs" />
+    <Compile Include="Publishing\WhiteRabbitPublisher.cs" />
+    <Compile Include="Utils\ISerializerFactoryEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

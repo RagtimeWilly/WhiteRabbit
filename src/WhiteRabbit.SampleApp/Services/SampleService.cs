@@ -11,13 +11,15 @@ namespace WhiteRabbit.SampleApp.Services
         private readonly IPublisher _publisher;
         private readonly TopologyBootstrapper _topologyBootstrapper;
         private bool _stopped;
+        private string _contentType;
 
-        public SampleService(IConsumer messageCommandConsumer, IPublisher publisher, TopologyBootstrapper topologyBootstrapper)
+        public SampleService(IConsumer messageCommandConsumer, IPublisher publisher, TopologyBootstrapper topologyBootstrapper, ContentType contentType)
         {
             _messageCommandConsumer = messageCommandConsumer;
             _publisher = publisher;
             _topologyBootstrapper = topologyBootstrapper;
             _stopped = false;
+            _contentType = contentType.Type;
         }
 
         public void Start()
@@ -25,7 +27,7 @@ namespace WhiteRabbit.SampleApp.Services
             _topologyBootstrapper.Init();
 
             var publishingTask = PublishTestCommands();
-            var consumingTask = _messageCommandConsumer.Start(true);
+            var consumingTask = _messageCommandConsumer.Start();
         }
 
         public void Stop()
@@ -45,7 +47,7 @@ namespace WhiteRabbit.SampleApp.Services
                     var addMessage = new AddMessage { MessageId = id, Text = "This is a new message." };
                     var correlationId = Guid.NewGuid();
 
-                    _publisher.Publish(addMessage, "WhiteRabbit.SampleApp.Commands", correlationId).Wait();
+                    _publisher.Publish(addMessage, "WhiteRabbit.SampleApp.Commands", correlationId, _contentType).Wait();
                     Console.WriteLine($"Published AddMessage with CorrelationId = {correlationId}");
 
                     Thread.Sleep(TimeSpan.FromSeconds(5));
@@ -53,7 +55,7 @@ namespace WhiteRabbit.SampleApp.Services
                     var updatedMessage = new UpdateMessage { MessageId = id, UpdatedText = "This is an update." };
                     correlationId = Guid.NewGuid();
 
-                    _publisher.Publish(updatedMessage, "WhiteRabbit.SampleApp.Commands", correlationId).Wait();
+                    _publisher.Publish(updatedMessage, "WhiteRabbit.SampleApp.Commands", correlationId, _contentType).Wait();
                     Console.WriteLine($"Published UpdateMessage with CorrelationId = {correlationId}");
 
                     Thread.Sleep(TimeSpan.FromSeconds(5));

@@ -5,28 +5,26 @@ namespace WhiteRabbit
 {
     public class DispatchingMessageHandler : IMessageHandler
     {
-        private readonly ISerializer _serializer;
+        private readonly ISerializerFactory _serializerFactory;
         private readonly IDispatcher _dispatcher;
 
-        public DispatchingMessageHandler(ISerializer serializer, IDispatcher dispatcher)
+        public DispatchingMessageHandler(ISerializerFactory serializerFactory, IDispatcher dispatcher)
         {
-            _serializer = serializer;
+            _serializerFactory = serializerFactory;
             _dispatcher = dispatcher;
         }
 
         public void Handle(BasicDeliverEventArgs args)
         {
-            var typeProperty = args.BasicProperties.Type;
+            if (string.IsNullOrEmpty(args.BasicProperties.Type))
+                throw new Exception("No type set on message");
 
-            if (typeProperty == null)
-                throw new Exception("Unable to process message with unknown type");
-
-            var type = Type.GetType(typeProperty);
+            var type = Type.GetType(args.BasicProperties.Type);
 
             if (type == null)
-                throw new Exception($"Unable to get type for {typeProperty}");
+                throw new Exception($"Unable to get type for {args.BasicProperties.Type}");
 
-            var msg = _serializer.DeserializeObject(args.Body, type);
+            var msg = _serializerFactory.DeserializeToType(args, type);
 
             _dispatcher.Dispatch(Convert.ChangeType(msg, type));
         }

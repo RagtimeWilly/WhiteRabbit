@@ -5,6 +5,6 @@ namespace WhiteRabbit
 {
     public interface IPublisher
     {
-        Task Publish<T>(T msg, string routingKey, Guid correlationId);
+        Task Publish<T>(T msg, string routingKey, Guid correlationId, string contentType);
     }
 }

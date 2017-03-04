@@ -5,6 +5,6 @@ namespace WhiteRabbit
 {
     public interface IConsumer : IDisposable
     {
-        Task Start(bool noAck);
+        Task Start(bool noAck = true, bool requeueNacked = false);
     }
 }
