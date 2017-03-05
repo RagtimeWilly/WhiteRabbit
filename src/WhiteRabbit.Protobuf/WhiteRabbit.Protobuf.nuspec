@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>WhiteRabbit.Protobuf</id>
+        <version>$version$</version>
+        <title>WhiteRabbit.Protobuf</title>
+        <authors>Sean Comiskey</authors>
+        <owners>Sean Comiskey</owners>
+		<licenseUrl>https://github.com/RagtimeWilly/WhiteRabbit/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/RagtimeWilly/WhiteRabbit/</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Protobuf serializer to be used with the White Rabbit library</description>
+        <copyright>Copyright © Sean Comiskey 2016</copyright>
+		<tags>rabbitmq white rabbit protobuf</tags>
+        <dependencies>
+			<dependency id="WhiteRabbit" version="$version$" />
+			<dependency id="protobuf-net" version="2.1.0" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\WhiteRabbit.Protobuf.dll" target="lib\net46\WhiteRabbit.Protobuf.dll" />
+    </files>
+</package>
