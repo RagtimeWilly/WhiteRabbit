@@ -15,7 +15,7 @@ Designed to do the following:
 
 You can get WhiteRabbit by [downloading the latest NuGet packages](https://github.com/RagtimeWilly/WhiteRabbit/wiki/Getting-started)
 
-## Documentation & Tutorials
+## Documentation & Samples
 
 * [Documentation](https://github.com/RagtimeWilly/WhiteRabbit/wiki)
 * [Sample Application](https://github.com/RagtimeWilly/WhiteRabbit/tree/master/src/WhiteRabbit.SampleApp)
