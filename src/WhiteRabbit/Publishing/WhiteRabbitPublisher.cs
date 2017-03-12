@@ -10,6 +10,11 @@ namespace WhiteRabbit
         {
         }
 
+        public async Task Publish<T>(T msg, Guid correlationId, string contentType)
+        {
+            await Publish(msg, string.Empty, correlationId, contentType);
+        }
+
         public async Task Publish<T>(T msg, string routingKey, Guid correlationId, string contentType)
         {
             await Task.Run(() =>
