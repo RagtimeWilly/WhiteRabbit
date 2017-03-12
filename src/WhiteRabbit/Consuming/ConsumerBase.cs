@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WhiteRabbit
 {
-    public abstract class ConsumerBase
+    public abstract class ConsumerBase : IDisposable
     {
         private readonly IModelFactory _modelFactory;
         private readonly Action<Exception, string> _onError;
