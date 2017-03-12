@@ -1,20 +1,11 @@
 ﻿using Autofac;
 
-namespace WhiteRabbit.Autofac
+namespace WhiteRabbit.Autofac.Scoping
 {
-    internal class ScopedMessageHandlerIoCModule : Module
+    internal class MessageContextIoCModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder
-                .RegisterType<DispatchingMessageHandler>()
-                .Named<IMessageHandler>("innerDispatchingHandler");
-
-            builder
-                .RegisterType<ScopedMessageHandler>()
-                .WithParameter("innerHandlerName", "innerDispatchingHandler")
-                .As<IMessageHandler>();
-
             builder
                 .RegisterType<MessageContextProvider>()
                 .AsSelf()
@@ -24,7 +15,7 @@ namespace WhiteRabbit.Autofac
                 .Register(c =>
                 {
                     var contextProvider = c.Resolve<MessageContextProvider>();
-                    return contextProvider.GetContext();
+                    return contextProvider.Get();
                 })
                 .As<IMessageContext>()
                 .InstancePerLifetimeScope();

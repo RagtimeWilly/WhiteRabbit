@@ -23,7 +23,6 @@ namespace WhiteRabbit.SampleApp.Infrastructure.IoC
 
         public static void RegisterModules(ContainerBuilder builder)
         {
-            builder.RegisterModule(new WhiteRabbitIoCModule { EnableContextPerMessage = true });
             builder.RegisterModule<ApplicationIoCModule>();
             builder.RegisterModule<InfrastructureIoCModule>();
             builder.RegisterModule<LoggingIoCModule>();

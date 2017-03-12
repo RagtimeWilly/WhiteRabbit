@@ -12,6 +12,8 @@ namespace WhiteRabbit.SampleApp.Infrastructure.IoC
 
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterModule<WhiteRabbitIoCModule>();
+
             RegisterTopologyConfiguration(builder);
             RegisterSerializer(builder);
             RegisterPublishers(builder);
@@ -20,6 +22,17 @@ namespace WhiteRabbit.SampleApp.Infrastructure.IoC
             builder
                 .RegisterType<CommandDispatcher>()
                 .As<IDispatcher>();
+
+            builder
+                .RegisterType<MessageCounter>()
+                .AsSelf()
+                .SingleInstance();
+
+            builder
+                .RegisterScopedHandlerChain()
+                .StartWith<MessageCountingHandler>()
+                .Then<PerformanceLoggingHandler>()
+                .Then<DispatchingMessageHandler>();
         }
 
         private static void RegisterTopologyConfiguration(ContainerBuilder builder)

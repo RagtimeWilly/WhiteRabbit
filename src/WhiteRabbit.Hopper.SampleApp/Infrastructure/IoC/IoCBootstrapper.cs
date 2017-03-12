@@ -14,7 +14,7 @@ namespace WhiteRabbit.Hopper.SampleApp.Infrastructure.IoC
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterModule(new WhiteRabbitIoCModule { EnableContextPerMessage = true });
+            builder.RegisterModule<WhiteRabbitIoCModule>();
 
             RegisterSerializers(builder);
             RegisterLogAction(builder);

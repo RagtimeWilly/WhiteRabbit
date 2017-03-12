@@ -68,6 +68,9 @@
     <Compile Include="Infrastructure\IoC\LoggingIoCModule.cs" />
     <Compile Include="Infrastructure\Messaging\CommandDispatcher.cs" />
     <Compile Include="Infrastructure\Messaging\EventPublisher.cs" />
+    <Compile Include="Infrastructure\Messaging\MessageCounter.cs" />
+    <Compile Include="Infrastructure\Messaging\MessageCountingHandler.cs" />
+    <Compile Include="Infrastructure\Messaging\PerformanceLoggingHandler.cs" />
     <Compile Include="Interfaces\ICommandHandler.cs" />
     <Compile Include="Interfaces\IMessageAddedPublisher.cs" />
     <Compile Include="Interfaces\IMessageUpdatedPublisher.cs" />

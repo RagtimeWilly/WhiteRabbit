@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WhiteRabbit.Autofac
+namespace WhiteRabbit.Autofac.Scoping
 {
     internal class MessageContextProvider
     {
@@ -11,7 +11,7 @@ namespace WhiteRabbit.Autofac
             _context = context;
         }
 
-        public IMessageContext GetContext()
+        public IMessageContext Get()
         {
             if (_context == null)
                 throw new Exception("Message context has not been set");

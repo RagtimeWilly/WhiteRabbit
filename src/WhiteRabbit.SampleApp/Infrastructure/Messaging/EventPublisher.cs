@@ -25,7 +25,7 @@ namespace WhiteRabbit.SampleApp.Infrastructure.Messaging
                 Text = text
             };
 
-            _publisher.Publish(evt, _messageContext.ReplyTo ?? string.Empty, new Guid(_messageContext.CorrelationId), _contentType);
+            _publisher.Publish(evt, _messageContext.ReplyTo ?? string.Empty, new Guid(_messageContext.CorrelationId), _contentType).Wait();
 
             Console.WriteLine($"MessageAdded published. Id={messageId}, CorrelationId = {_messageContext.CorrelationId}");
 
@@ -39,7 +39,7 @@ namespace WhiteRabbit.SampleApp.Infrastructure.Messaging
                 UpdatedText = text
             };
 
-            _publisher.Publish(evt, _messageContext.ReplyTo ?? string.Empty, new Guid(_messageContext.CorrelationId), _contentType);
+            _publisher.Publish(evt, _messageContext.ReplyTo ?? string.Empty, new Guid(_messageContext.CorrelationId), _contentType).Wait();
 
             Console.WriteLine($"MessageUpdated published. Id={messageId}, CorrelationId = {_messageContext.CorrelationId}");
         }

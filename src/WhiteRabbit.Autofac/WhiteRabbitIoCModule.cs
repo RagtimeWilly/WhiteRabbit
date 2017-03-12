@@ -2,22 +2,25 @@
 using System.Configuration;
 using Autofac;
 using RabbitMQ.Client;
+using WhiteRabbit.Autofac.Scoping;
 
 namespace WhiteRabbit.Autofac
 {
     public class WhiteRabbitIoCModule : Module
     {
-        public bool EnableContextPerMessage { get; set; }
-
         public bool RegisterDefaultSerializerFactory { get; set; } = true;
+
+        public bool RegisterMessageContextPerLifetimeScope { get; set; } = true;
+
+        public bool RegisterDefaultScopedDispatchingHandler { get; set; }
          
         protected override void Load(ContainerBuilder builder)
         {
             RegisterModelFactory(builder);
 
-            if (EnableContextPerMessage)
+            if (RegisterMessageContextPerLifetimeScope)
             {
-                builder.RegisterModule<ScopedMessageHandlerIoCModule>();
+                builder.RegisterModule<MessageContextIoCModule>();
             }
 
             if (RegisterDefaultSerializerFactory)
@@ -25,6 +28,13 @@ namespace WhiteRabbit.Autofac
                 builder
                     .RegisterType<SerializerFactory>()
                     .As<ISerializerFactory>();
+            }
+
+            if (RegisterDefaultScopedDispatchingHandler)
+            {
+                builder
+                  .RegisterScopedHandlerChain()
+                  .StartWith<DispatchingMessageHandler>();
             }
 
             builder
