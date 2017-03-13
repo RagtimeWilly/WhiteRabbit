@@ -1,5 +1,3 @@
-# WhiteRabbit
-
 ![Build Status](https://ci.appveyor.com/api/projects/status/github/RagtimeWilly/whiterabbit?branch=master&svg=true)
 [![NuGet](https://img.shields.io/nuget/v/WhiteRabbit.svg)](https://www.nuget.org/packages/WhiteRabbit/)
 
