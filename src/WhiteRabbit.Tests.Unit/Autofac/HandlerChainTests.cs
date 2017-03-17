@@ -129,11 +129,13 @@ namespace WhiteRabbit.Tests.Unit.Autofac
                     _builder = builder;
                 }
 
-                public void Handle(BasicDeliverEventArgs args)
+                public void Handle<T>(T args)
                 {
                     _builder.Append("~A~");
 
-                    _innerHandler.Handle(args);
+                    var msg = new MessageB { TextB = "~B~" };
+
+                    _innerHandler.Handle(msg);
                 }
             }
 
@@ -148,11 +150,18 @@ namespace WhiteRabbit.Tests.Unit.Autofac
                     _builder = builder;
                 }
 
-                public void Handle(BasicDeliverEventArgs args)
+                public void Handle<T>(T args)
                 {
-                    _builder.Append("~B~");
+                    var msgB = args as MessageB;
 
-                    _innerHandler.Handle(args);
+                    if (msgB == null)
+                        msgB = new MessageB { TextB = "~B~" };
+
+                    _builder.Append(msgB.TextB);
+
+                    var msgC = new MessageC { TextC = "~C~" };
+
+                    _innerHandler.Handle(msgC);
                 }
             }
 
@@ -165,9 +174,11 @@ namespace WhiteRabbit.Tests.Unit.Autofac
                     _builder = builder;
                 }
 
-                public void Handle(BasicDeliverEventArgs args)
+                public void Handle<T>(T args)
                 {
-                    _builder.Append("~C~");
+                    var msgC = args as MessageC;
+
+                    _builder.Append(msgC.TextC);
                 }
             }
             
@@ -180,10 +191,20 @@ namespace WhiteRabbit.Tests.Unit.Autofac
                     _builder = builder;
                 }
 
-                public void Handle(BasicDeliverEventArgs args)
+                public void Handle<T>(T args)
                 {
                     _builder.Append("~D~");
                 }
+            }
+
+            private class MessageB
+            {
+                public string TextB { get; set; }
+            }
+
+            private class MessageC
+            {
+                public string TextC { get; set; }
             }
         }
     }

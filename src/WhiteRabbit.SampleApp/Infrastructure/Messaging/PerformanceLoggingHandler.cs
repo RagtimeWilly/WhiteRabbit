@@ -13,15 +13,15 @@ namespace WhiteRabbit.SampleApp.Infrastructure.Messaging
             _innerHandler = innerHandler;
         }
 
-        public void Handle(BasicDeliverEventArgs args)
+        public void Handle<T>(T msg)
         {
             var timer = Stopwatch.StartNew();
 
-            _innerHandler.Handle(args);
+            _innerHandler.Handle(msg);
 
             timer.Stop();
 
-            Console.WriteLine($"Finished handling {args.BasicProperties.Type} in {timer.Elapsed}");
+            Console.WriteLine($"Finished handling {(msg as BasicDeliverEventArgs).BasicProperties.Type} in {timer.Elapsed}");
         }
     }
 }

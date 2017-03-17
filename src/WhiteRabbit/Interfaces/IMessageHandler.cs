@@ -4,6 +4,6 @@ namespace WhiteRabbit
 {
     public interface IMessageHandler
     {
-        void Handle(BasicDeliverEventArgs args);
+        void Handle<T>(T msg);
     }
 }

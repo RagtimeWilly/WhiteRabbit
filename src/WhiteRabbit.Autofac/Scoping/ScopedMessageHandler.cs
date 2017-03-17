@@ -17,8 +17,13 @@ namespace WhiteRabbit.Autofac.Scoping
             _scope = scope;
         }
 
-        public void Handle(BasicDeliverEventArgs args)
+        public void Handle<T>(T msg)
         {
+            var args = msg as BasicDeliverEventArgs;
+
+            if (args == null)
+                throw new InvalidCastException($"Could not cast {typeof(T).Name} to BasicDeliverEventArgs");
+
             using (var scope = _scope.BeginLifetimeScope())
             {
                 var contextProvider = scope.Resolve<MessageContextProvider>();

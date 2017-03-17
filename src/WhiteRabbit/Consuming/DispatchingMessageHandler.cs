@@ -14,8 +14,13 @@ namespace WhiteRabbit
             _dispatcher = dispatcher;
         }
 
-        public void Handle(BasicDeliverEventArgs args)
+        public void Handle<T>(T msg)
         {
+            var args = msg as BasicDeliverEventArgs;
+
+            if (args == null)
+                throw new InvalidCastException($"Could not cast {typeof(T).Name} to BasicDeliverEventArgs");
+
             if (string.IsNullOrEmpty(args.BasicProperties.Type))
                 throw new Exception("No type set on message");
 
@@ -24,9 +29,9 @@ namespace WhiteRabbit
             if (type == null)
                 throw new Exception($"Unable to get type for {args.BasicProperties.Type}");
 
-            var msg = _serializerFactory.DeserializeToType(args, type);
+            var data = _serializerFactory.DeserializeToType(args, type);
 
-            _dispatcher.Dispatch(Convert.ChangeType(msg, type));
+            _dispatcher.Dispatch(Convert.ChangeType(data, type));
         }
     }
 }

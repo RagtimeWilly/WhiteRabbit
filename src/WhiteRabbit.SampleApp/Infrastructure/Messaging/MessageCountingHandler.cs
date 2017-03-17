@@ -14,7 +14,7 @@ namespace WhiteRabbit.SampleApp.Infrastructure.Messaging
             _counter = counter;
         }
 
-        public void Handle(BasicDeliverEventArgs args)
+        public void Handle<T>(T args)
         {
             _counter.Increment();
 
